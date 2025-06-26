@@ -1,0 +1,279 @@
+{
+  "info": {
+    "name": "Brenda_Desenvolvimento_de_Sistemas_backend_Fase-2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleção Postman para a Fase 2 do projeto Desenvolvimento de Sistemas Backend, incluindo requisições para servico-gestao, servico-faturamento, servico-planos-ativos e api-gateway."
+  },
+  "item": [
+    {
+      "name": "Gestao",
+      "item": [
+        {
+          "name": "Criar Plano",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"nome\": \"Plano Básico\",\n  \"valor\": 99.90\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos"]
+            },
+            "description": "Cria um novo plano no servico-gestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Plano por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos", "1"]
+            },
+            "description": "Obtém um plano pelo ID no servico-gestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir Plano por ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos", "1"]
+            },
+            "description": "Exclui um plano pelo ID no servico-gestao."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições para o servico-gestao (porta 3000)."
+    },
+    {
+      "name": "Faturamento",
+      "item": [
+        {
+          "name": "Criar Cobrança",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cobrancaId\": 1,\n  \"clienteId\": 100,\n  \"valor\": 99.90,\n  \"status\": \"pendente\",\n  \"dataVencimento\": \"2025-12-31\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/cobrancas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas"]
+            },
+            "description": "Cria uma nova cobrança no servico-faturamento."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições para o servico-faturamento (porta 3001)."
+    },
+    {
+      "name": "Planos Ativos",
+      "item": [
+        {
+          "name": "Criar Plano Ativo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 100,\n  \"planoId\": 1,\n  \"nomePlano\": \"Plano Básico\",\n  \"valor\": 99.90,\n  \"dataAtivacao\": \"2025-06-19\",\n  \"ativo\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3002/planos-ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3002",
+              "path": ["planos-ativos"]
+            },
+            "description": "Cria um novo plano ativo no servico-planos-ativos."
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Planos Ativos por Cliente ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3002/planos-ativos/cliente/100",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3002",
+              "path": ["planos-ativos", "cliente", "100"]
+            },
+            "description": "Obtém planos ativos por cliente ID no servico-planos-ativos."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições para o servico-planos-ativos (porta 3002)."
+    },
+    {
+      "name": "API Gateway",
+      "item": [
+        {
+          "name": "Criar um novo Plano via API Gateway",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"nome\": \"Plano Básico\",\n  \"valor\": 99.90\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3003/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["planos"]
+            },
+            "description": "Cria um plano por meio do API Gateway, que faz o roteamento para o servico-gestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Plano por ID via API Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3003/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["planos", "1"]
+            },
+            "description": "Obtém um plano por ID por meio do API Gateway, que faz o roteamento para o servico-gestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir Plano por ID via API Gateway",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3003/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["planos", "1"]
+            },
+            "description": "Exclui um plano por ID por meio do API Gateway, que faz o roteamento para o servico-gestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Cobrança por meio do API Gateway",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cobrancaId\": 1,\n  \"clienteId\": 100,\n  \"valor\": 99.90,\n  \"status\": \"pendente\",\n  \"dataVencimento\": \"2025-12-31\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3003/cobrancas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["cobrancas"]
+            },
+            "description": "Cria uma cobrança por meio do API Gateway, que faz o roteamento para o servico-faturamento."
+          },
+          "response": []
+        },
+        {
+          "name": "Criar um novo Plano Ativo via API Gateway",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 100,\n  \"planoId\": 1,\n  \"nomePlano\": \"Plano Básico\",\n  \"valor\": 99.90,\n  \"dataAtivacao\": \"2025-06-19\",\n  \"ativo\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3003/planos-ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["planos-ativos"]
+            },
+            "description": "Cria um plano ativo por meio do API Gateway, que faz o roteamento para o servico-planos-ativos."
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Planos Ativos por Cliente ID via API Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3003/planos-ativos/cliente/100",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3003",
+              "path": ["planos-ativos", "cliente", "100"]
+            },
+            "description": "Obtém planos ativos por cliente ID por meio do API Gateway, que faz o roteamento para o servico-planos-ativos."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições para o api-gateway (porta 3003), que roteia para os microsserviços."
+    }
+  ]
+}
