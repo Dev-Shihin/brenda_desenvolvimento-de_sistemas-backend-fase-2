@@ -1,0 +1,535 @@
+{
+  "info": {
+    "name": "Brenda_Desenvolvimento_de_Sistemas_backend_Fase-2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleção Postman para a Fase 2 do projeto Desenvolvimento de Sistemas Backend, organizada em pastas para API Gateway (porta 4000), ServicoGestao (porta 3000), ServicoFaturamento (porta 3001), e ServicoPlanosAtivos (porta 3002)."
+  },
+  "item": [
+    {
+      "name": "API Gateway",
+      "item": [
+        {
+          "name": "Criar Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer meu-token-seguro"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"nome\": \"João Silva\",\n  \"planoId\": 101\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/clientes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "clientes"]
+            },
+            "description": "Cria um novo cliente por meio do API Gateway, roteando para o ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Ativar Plano",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer meu-token-seguro"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"planoId\": 101,\n  \"nomePlano\": \"Plano Básico\",\n  \"valor\": 99.90,\n  \"dataAtivacao\": \"2025-06-28\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/planos-ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "planos-ativos"]
+            },
+            "description": "Ativa um plano para o cliente por meio do API Gateway, roteando para o ServicoPlanosAtivos."
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Cobrança",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer meu-token-seguro"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cobrancaId\": 1001,\n  \"clienteId\": 1,\n  \"valor\": 99.90,\n  \"status\": \"pendente\",\n  \"dataVencimento\": \"2025-07-28\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/cobrancas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "cobrancas"]
+            },
+            "description": "Cria uma cobrança para o cliente por meio do API Gateway, roteando para o ServicoFaturamento."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições para o API Gateway (porta 4000), que roteia para os microsserviços via RabbitMQ ou fallback HTTP."
+    },
+    {
+      "name": "ServicoGestao",
+      "item": [
+        {
+          "name": "Criar Plano",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"Plano Residencial 100MB\",\r\n  \"valor\": 99.90\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3000/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos"]
+            },
+            "description": "Cria um novo plano diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Plano",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos", "1"]
+            },
+            "description": "Obtém um plano pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Planos",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos"]
+            },
+            "description": "Lista todos os planos diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Plano",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Plano Residencial 200MB\",\r\n  \"valor\": 149.90\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3000/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos", "1"]
+            },
+            "description": "Atualiza um plano pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Plano",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/planos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["planos", "1"]
+            },
+            "description": "Deleta um plano pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Cliente",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"João Silva\",\r\n  \"planoId\": 1\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3000/clientes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes"]
+            },
+            "description": "Cria um novo cliente diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Cliente",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/clientes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes", "1"]
+            },
+            "description": "Obtém um cliente pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Cliente",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"João Silva Atualizado\",\r\n  \"planoId\": 2\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3000/clientes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes", "1"]
+            },
+            "description": "Atualiza um cliente pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Clientes",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/clientes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes"]
+            },
+            "description": "Lista todos os clientes diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Cliente",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/clientes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes", "1"]
+            },
+            "description": "Deleta um cliente pelo ID diretamente no ServicoGestao."
+          },
+          "response": []
+        },
+        {
+          "name": "Associar Plano a Cliente",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"planoId\": 2\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3000/clientes/1/planos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["clientes", "1", "planos"]
+            },
+            "description": "Associa um plano a um cliente diretamente no ServicoGestao."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições diretas para o ServicoGestao (porta 3000)."
+    },
+    {
+      "name": "ServicoFaturamento",
+      "item": [
+        {
+          "name": "Criar Cobrança",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/cobrancas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"cobrancaId\": 1, \"clienteId\": 100, \"valor\": 99.90, \"status\": \"pendente\", \"dataVencimento\": \"2025-07-27T00:00:00Z\"}"
+            },
+            "description": "Cria uma nova cobrança diretamente no ServicoFaturamento."
+          },
+          "response": [
+            {
+              "name": "Sucesso",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"cobrancaId\": 1, \"clienteId\": 100, \"valor\": 99.90, \"status\": \"pendente\", \"dataVencimento\": \"2025-07-27T00:00:00Z\", \"createdAt\": \"2025-06-27T12:56:00Z\", \"updatedAt\": \"2025-06-27T12:56:00Z\"}"
+            },
+            {
+              "name": "Erro - Dados Inválidos",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\"message\": \"Dados inválidos\", \"statusCode\": 400}"
+            }
+          ]
+        },
+        {
+          "name": "Consultar Cobrança por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/cobrancas/550e8400-e29b-41d4-a716-446655440000",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas", "550e8400-e29b-41d4-a716-446655440000"]
+            },
+            "description": "Consulta uma cobrança específica pelo ID diretamente no ServicoFaturamento."
+          },
+          "response": [
+            {
+              "name": "Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"cobrancaId\": 1, \"clienteId\": 100, \"valor\": 99.90, \"status\": \"pendente\", \"dataVencimento\": \"2025-07-27T00:00:00Z\", \"createdAt\": \"2025-06-27T12:56:00Z\", \"updatedAt\": \"2025-06-27T12:56:00Z\"}"
+            },
+            {
+              "name": "Não Encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\"message\": \"Cobrança com ID 550e8400-e29b-41d4-a716-446655440000 não encontrada\", \"statusCode\": 404}"
+            }
+          ]
+        },
+        {
+          "name": "Consultar Cobranças por Cliente ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/cobrancas/cliente/100",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas", "cliente", "100"]
+            },
+            "description": "Consulta todas as cobranças de um cliente pelo ID diretamente no ServicoFaturamento."
+          },
+          "response": [
+            {
+              "name": "Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[{\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"cobrancaId\": 1, \"clienteId\": 100, \"valor\": 99.90, \"status\": \"pendente\", \"dataVencimento\": \"2025-07-27T00:00:00Z\", \"createdAt\": \"2025-06-27T12:56:00Z\", \"updatedAt\": \"2025-06-27T12:56:00Z\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar Cobrança",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3001/cobrancas/550e8400-e29b-41d4-a716-446655440000",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas", "550e8400-e29b-41d4-a716-446655440000"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"pago\", \"valor\": 89.90}"
+            },
+            "description": "Atualiza os dados de uma cobrança existente diretamente no ServicoFaturamento."
+          },
+          "response": [
+            {
+              "name": "Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"cobrancaId\": 1, \"clienteId\": 100, \"valor\": 89.90, \"status\": \"pago\", \"dataVencimento\": \"2025-07-27T00:00:00Z\", \"createdAt\": \"2025-06-27T12:56:00Z\", \"updatedAt\": \"2025-06-27T12:58:00Z\"}"
+            },
+            {
+              "name": "Não Encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\"message\": \"Cobrança com ID 550e8400-e29b-41d4-a716-446655440000 não encontrada\", \"statusCode\": 404}"
+            }
+          ]
+        },
+        {
+          "name": "Deletar Cobrança",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/cobrancas/550e8400-e29b-41d4-a716-446655440000",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["cobrancas", "550e8400-e29b-41d4-a716-446655440000"]
+            },
+            "description": "Deleta uma cobrança pelo ID diretamente no ServicoFaturamento."
+          },
+          "response": [
+            {
+              "name": "Sucesso",
+              "status": "No Content",
+              "code": 204,
+              "header": []
+            },
+            {
+              "name": "Não Encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\"message\": \"Cobrança com ID 550e8400-e29b-41d4-a716-446655440000 não encontrada\", \"statusCode\": 404}"
+            }
+          ]
+        }
+      ],
+      "description": "Requisições diretas para o ServicoFaturamento (porta 3001)."
+    },
+    {
+      "name": "ServicoPlanosAtivos",
+      "item": [
+        {
+          "name": "Criar Plano Ativo",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"clienteId\": 1,\r\n  \"planoId\": 1,\r\n  \"nomePlano\": \"Plano Residencial 100MB\",\r\n  \"valor\": 99,\r\n  \"ativo\": true,\r\n  \"dataAtivacao\": \"2025-06-27T19:51:00Z\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "http://localhost:3002/planos-ativos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3002",
+              "path": ["planos-ativos"]
+            },
+            "description": "Cria um novo plano ativo diretamente no ServicoPlanosAtivos."
+          },
+          "response": []
+        }
+      ],
+      "description": "Requisições diretas para o ServicoPlanosAtivos (porta 3002)."
+    }
+  ]
+}
